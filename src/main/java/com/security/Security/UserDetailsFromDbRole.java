@@ -7,6 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -14,37 +18,24 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class UserDetailsFromDb implements AuthenticationProvider /*UserDetailsService*//*, AuthenticationProvider*/ {
+public class UserDetailsFromDbRole implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
 
-    // @Override
-/*
+     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ///  return User.withUsername("thavam").password(passwordEncoder.encode("123456")).roles("user").build();
+             //return User.withUsername("1234").password(passwordEncoder.encode("1234")).roles("user").build();
 
-        return new User("thavam", passwordEncoder.encode("1234"), getRole());
+         return new User("1", passwordEncoder.encode("1"), getRole());
     }
-*/
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
-        String username = token.getName();
-        String password = token.getCredentials().toString();
-        return new UsernamePasswordAuthenticationToken(username, password, getRole());
-
-    }
 
     private Collection<? extends GrantedAuthority> getRole() {
-        List<GrantedAuthority> list = new ArrayList<>();
+        // Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>(); // use list if you wish
+        List<SimpleGrantedAuthority> list = new ArrayList<>();
         list.add(new SimpleGrantedAuthority("user"));
         return list;
     }
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
-    }
 }
