@@ -16,8 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-    public String[] adminAccess = {"/admin-login", "/admin-dashboard",};
-    public String[] userAccess = {"/user-login", "/user-dashboard", "/user"};
+    public String[] adminAccess = {"/admin-login/**"};
+    public String[] userAccess = {"/user-login/**"};
 
     /* @Bean
      public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
@@ -27,7 +27,7 @@ public class SecurityConfig {
      }*/
     @Bean
     public AuthenticationProvider authenticationManagerBean() throws Exception {
-         return new UserDetailsFromDb();
+        return new UserDetailsFromDb();
     }
 
     @Bean
