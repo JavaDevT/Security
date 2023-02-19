@@ -12,12 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class UserDetailsFromDbRole implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -26,14 +28,12 @@ public class UserDetailsFromDbRole implements UserDetailsService {
      @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
              //return User.withUsername("1234").password(passwordEncoder.encode("1234")).roles("user").build();
-
          return new User("1", passwordEncoder.encode("1"), getRole());
     }
 
 
     private Collection<? extends GrantedAuthority> getRole() {
-        // Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>(); // use list if you wish
-        List<SimpleGrantedAuthority> list = new ArrayList<>();
+         List<SimpleGrantedAuthority> list = new ArrayList<>();
         list.add(new SimpleGrantedAuthority("user"));
         return list;
     }
