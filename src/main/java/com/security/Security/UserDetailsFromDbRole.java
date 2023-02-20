@@ -21,19 +21,22 @@ import java.util.List;
 
 @Service
 public class UserDetailsFromDbRole implements UserDetailsService {
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
 
-     @Override
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-             //return User.withUsername("1234").password(passwordEncoder.encode("1234")).roles("user").build();
-         return new User("1", passwordEncoder.encode("1"), getRole());
+        //return User.withUsername("1234").password(passwordEncoder.encode("1234")).roles("user").build();
+          return new User("thavam", passwordEncoder.encode("thavam"), getRole());
+      //  return new User("thavam", "thavam", getRole());
     }
 
 
     private Collection<? extends GrantedAuthority> getRole() {
-         List<SimpleGrantedAuthority> list = new ArrayList<>();
+        List<SimpleGrantedAuthority> list = new ArrayList<>();
         list.add(new SimpleGrantedAuthority("user"));
         return list;
     }
